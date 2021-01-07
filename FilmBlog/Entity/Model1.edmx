@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBBlogFilmModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBBlogFilm.dbo.TBLADMIN' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TBLADMIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERNAME" Type="varchar" MaxLength="15" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="TBLBLOCG">
+          <Key>
+            <PropertyRef Name="BLOGID" />
+          </Key>
+          <Property Name="BLOGID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BLOGBASLIQ" Type="nvarchar" MaxLength="100" />
+          <Property Name="BLOGCONTENT" Type="nvarchar" MaxLength="4000" />
+          <Property Name="BLOGTAARIX" Type="smalldatetime" />
+          <Property Name="BLOGMEDIA" Type="nvarchar" MaxLength="100" />
+          <Property Name="BLOGTYPE" Type="tinyint" />
+          <Property Name="BLOGCATEGORY" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="TBLCATEGORY">
+          <Key>
+            <PropertyRef Name="CATID" />
+          </Key>
+          <Property Name="CATID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CATNAME" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="TBLCOMMENT">
+          <Key>
+            <PropertyRef Name="CMTID" />
+          </Key>
+          <Property Name="CMTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NIKNAME" Type="nvarchar" MaxLength="25" />
+          <Property Name="MAIL" Type="nvarchar" MaxLength="50" />
+          <Property Name="COMMENT" Type="nvarchar" MaxLength="400" />
+          <Property Name="CMTBLOG" Type="int" />
+        </EntityType>
+        <EntityType Name="TBLELAQE">
+          <Key>
+            <PropertyRef Name="MSJID" />
+          </Key>
+          <Property Name="MSJID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAMESURNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="MAIL" Type="nvarchar" MaxLength="50" />
+          <Property Name="TELEFON" Type="nvarchar" MaxLength="25" />
+          <Property Name="MOVZU" Type="nvarchar" MaxLength="50" />
+          <Property Name="MESAJ" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="TBLHAQQIMIZDA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ACIQLAMA" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="TBLTYPE">
+          <Key>
+            <PropertyRef Name="TYPEID" />
+          </Key>
+          <Property Name="TYPEID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TYPENAME" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <Association Name="FK_TBLBLOCG_TBLCATEGORY">
+          <End Role="TBLCATEGORY" Type="Self.TBLCATEGORY" Multiplicity="0..1" />
+          <End Role="TBLBLOCG" Type="Self.TBLBLOCG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLCATEGORY">
+              <PropertyRef Name="CATID" />
+            </Principal>
+            <Dependent Role="TBLBLOCG">
+              <PropertyRef Name="BLOGCATEGORY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLBLOCG_TBLTYPE">
+          <End Role="TBLTYPE" Type="Self.TBLTYPE" Multiplicity="0..1" />
+          <End Role="TBLBLOCG" Type="Self.TBLBLOCG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLTYPE">
+              <PropertyRef Name="TYPEID" />
+            </Principal>
+            <Dependent Role="TBLBLOCG">
+              <PropertyRef Name="BLOGTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLCOMMENT_TBLBLOCG">
+          <End Role="TBLBLOCG" Type="Self.TBLBLOCG" Multiplicity="0..1" />
+          <End Role="TBLCOMMENT" Type="Self.TBLCOMMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLBLOCG">
+              <PropertyRef Name="BLOGID" />
+            </Principal>
+            <Dependent Role="TBLCOMMENT">
+              <PropertyRef Name="CMTBLOG" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBBlogFilmModelStoreContainer">
+          <EntitySet Name="TBLBLOCG" EntityType="Self.TBLBLOCG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLCATEGORY" EntityType="Self.TBLCATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLCOMMENT" EntityType="Self.TBLCOMMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLELAQE" EntityType="Self.TBLELAQE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLHAQQIMIZDA" EntityType="Self.TBLHAQQIMIZDA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLTYPE" EntityType="Self.TBLTYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLADMIN" EntityType="Self.TBLADMIN" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TBLADMIN].[ID] AS [ID], 
+    [TBLADMIN].[USERNAME] AS [USERNAME], 
+    [TBLADMIN].[PASSWORD] AS [PASSWORD]
+    FROM [dbo].[TBLADMIN] AS [TBLADMIN]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_TBLBLOCG_TBLCATEGORY" Association="Self.FK_TBLBLOCG_TBLCATEGORY">
+            <End Role="TBLCATEGORY" EntitySet="TBLCATEGORY" />
+            <End Role="TBLBLOCG" EntitySet="TBLBLOCG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLBLOCG_TBLTYPE" Association="Self.FK_TBLBLOCG_TBLTYPE">
+            <End Role="TBLTYPE" EntitySet="TBLTYPE" />
+            <End Role="TBLBLOCG" EntitySet="TBLBLOCG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLCOMMENT_TBLBLOCG" Association="Self.FK_TBLCOMMENT_TBLBLOCG">
+            <End Role="TBLBLOCG" EntitySet="TBLBLOCG" />
+            <End Role="TBLCOMMENT" EntitySet="TBLCOMMENT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBBlogFilmModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TBLBLOCG">
+          <Key>
+            <PropertyRef Name="BLOGID" />
+          </Key>
+          <Property Name="BLOGID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BLOGBASLIQ" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BLOGCONTENT" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="BLOGTAARIX" Type="DateTime" Precision="0" />
+          <Property Name="BLOGMEDIA" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BLOGTYPE" Type="Byte" />
+          <Property Name="BLOGCATEGORY" Type="Byte" />
+          <NavigationProperty Name="TBLCATEGORY" Relationship="Self.FK_TBLBLOCG_TBLCATEGORY" FromRole="TBLBLOCG" ToRole="TBLCATEGORY" />
+          <NavigationProperty Name="TBLTYPE" Relationship="Self.FK_TBLBLOCG_TBLTYPE" FromRole="TBLBLOCG" ToRole="TBLTYPE" />
+          <NavigationProperty Name="TBLCOMMENT" Relationship="Self.FK_TBLCOMMENT_TBLBLOCG" FromRole="TBLBLOCG" ToRole="TBLCOMMENT" />
+        </EntityType>
+        <EntityType Name="TBLCATEGORY">
+          <Key>
+            <PropertyRef Name="CATID" />
+          </Key>
+          <Property Name="CATID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CATNAME" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TBLBLOCG" Relationship="Self.FK_TBLBLOCG_TBLCATEGORY" FromRole="TBLCATEGORY" ToRole="TBLBLOCG" />
+        </EntityType>
+        <EntityType Name="TBLCOMMENT">
+          <Key>
+            <PropertyRef Name="CMTID" />
+          </Key>
+          <Property Name="CMTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NIKNAME" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="MAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="COMMENT" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="CMTBLOG" Type="Int32" />
+          <NavigationProperty Name="TBLBLOCG" Relationship="Self.FK_TBLCOMMENT_TBLBLOCG" FromRole="TBLCOMMENT" ToRole="TBLBLOCG" />
+        </EntityType>
+        <EntityType Name="TBLELAQE">
+          <Key>
+            <PropertyRef Name="MSJID" />
+          </Key>
+          <Property Name="MSJID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAMESURNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TELEFON" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="MOVZU" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MESAJ" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TBLHAQQIMIZDA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ACIQLAMA" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TBLTYPE">
+          <Key>
+            <PropertyRef Name="TYPEID" />
+          </Key>
+          <Property Name="TYPEID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TYPENAME" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TBLBLOCG" Relationship="Self.FK_TBLBLOCG_TBLTYPE" FromRole="TBLTYPE" ToRole="TBLBLOCG" />
+        </EntityType>
+        <Association Name="FK_TBLBLOCG_TBLCATEGORY">
+          <End Role="TBLCATEGORY" Type="Self.TBLCATEGORY" Multiplicity="0..1" />
+          <End Role="TBLBLOCG" Type="Self.TBLBLOCG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLCATEGORY">
+              <PropertyRef Name="CATID" />
+            </Principal>
+            <Dependent Role="TBLBLOCG">
+              <PropertyRef Name="BLOGCATEGORY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLBLOCG_TBLTYPE">
+          <End Role="TBLTYPE" Type="Self.TBLTYPE" Multiplicity="0..1" />
+          <End Role="TBLBLOCG" Type="Self.TBLBLOCG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLTYPE">
+              <PropertyRef Name="TYPEID" />
+            </Principal>
+            <Dependent Role="TBLBLOCG">
+              <PropertyRef Name="BLOGTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBLCOMMENT_TBLBLOCG">
+          <End Role="TBLBLOCG" Type="Self.TBLBLOCG" Multiplicity="0..1" />
+          <End Role="TBLCOMMENT" Type="Self.TBLCOMMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLBLOCG">
+              <PropertyRef Name="BLOGID" />
+            </Principal>
+            <Dependent Role="TBLCOMMENT">
+              <PropertyRef Name="CMTBLOG" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBBlogFilmEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBLBLOCG" EntityType="Self.TBLBLOCG" />
+          <EntitySet Name="TBLCATEGORY" EntityType="Self.TBLCATEGORY" />
+          <EntitySet Name="TBLCOMMENT" EntityType="Self.TBLCOMMENT" />
+          <EntitySet Name="TBLELAQE" EntityType="Self.TBLELAQE" />
+          <EntitySet Name="TBLHAQQIMIZDA" EntityType="Self.TBLHAQQIMIZDA" />
+          <EntitySet Name="TBLTYPE" EntityType="Self.TBLTYPE" />
+          <AssociationSet Name="FK_TBLBLOCG_TBLCATEGORY" Association="Self.FK_TBLBLOCG_TBLCATEGORY">
+            <End Role="TBLCATEGORY" EntitySet="TBLCATEGORY" />
+            <End Role="TBLBLOCG" EntitySet="TBLBLOCG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLBLOCG_TBLTYPE" Association="Self.FK_TBLBLOCG_TBLTYPE">
+            <End Role="TBLTYPE" EntitySet="TBLTYPE" />
+            <End Role="TBLBLOCG" EntitySet="TBLBLOCG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBLCOMMENT_TBLBLOCG" Association="Self.FK_TBLCOMMENT_TBLBLOCG">
+            <End Role="TBLBLOCG" EntitySet="TBLBLOCG" />
+            <End Role="TBLCOMMENT" EntitySet="TBLCOMMENT" />
+          </AssociationSet>
+          <EntitySet Name="TBLADMIN" EntityType="DBBlogFilmModel.TBLADMIN" />
+        </EntityContainer>
+        <EntityType Name="TBLADMIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERNAME" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBBlogFilmModelStoreContainer" CdmEntityContainer="DBBlogFilmEntities">
+          <EntitySetMapping Name="TBLBLOCG">
+            <EntityTypeMapping TypeName="DBBlogFilmModel.TBLBLOCG">
+              <MappingFragment StoreEntitySet="TBLBLOCG">
+                <ScalarProperty Name="BLOGID" ColumnName="BLOGID" />
+                <ScalarProperty Name="BLOGBASLIQ" ColumnName="BLOGBASLIQ" />
+                <ScalarProperty Name="BLOGCONTENT" ColumnName="BLOGCONTENT" />
+                <ScalarProperty Name="BLOGTAARIX" ColumnName="BLOGTAARIX" />
+                <ScalarProperty Name="BLOGMEDIA" ColumnName="BLOGMEDIA" />
+                <ScalarProperty Name="BLOGTYPE" ColumnName="BLOGTYPE" />
+                <ScalarProperty Name="BLOGCATEGORY" ColumnName="BLOGCATEGORY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLCATEGORY">
+            <EntityTypeMapping TypeName="DBBlogFilmModel.TBLCATEGORY">
+              <MappingFragment StoreEntitySet="TBLCATEGORY">
+                <ScalarProperty Name="CATID" ColumnName="CATID" />
+                <ScalarProperty Name="CATNAME" ColumnName="CATNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLCOMMENT">
+            <EntityTypeMapping TypeName="DBBlogFilmModel.TBLCOMMENT">
+              <MappingFragment StoreEntitySet="TBLCOMMENT">
+                <ScalarProperty Name="CMTID" ColumnName="CMTID" />
+                <ScalarProperty Name="NIKNAME" ColumnName="NIKNAME" />
+                <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="CMTBLOG" ColumnName="CMTBLOG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLELAQE">
+            <EntityTypeMapping TypeName="DBBlogFilmModel.TBLELAQE">
+              <MappingFragment StoreEntitySet="TBLELAQE">
+                <ScalarProperty Name="MSJID" ColumnName="MSJID" />
+                <ScalarProperty Name="NAMESURNAME" ColumnName="NAMESURNAME" />
+                <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+                <ScalarProperty Name="TELEFON" ColumnName="TELEFON" />
+                <ScalarProperty Name="MOVZU" ColumnName="MOVZU" />
+                <ScalarProperty Name="MESAJ" ColumnName="MESAJ" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLHAQQIMIZDA">
+            <EntityTypeMapping TypeName="DBBlogFilmModel.TBLHAQQIMIZDA">
+              <MappingFragment StoreEntitySet="TBLHAQQIMIZDA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ACIQLAMA" ColumnName="ACIQLAMA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLTYPE">
+            <EntityTypeMapping TypeName="DBBlogFilmModel.TBLTYPE">
+              <MappingFragment StoreEntitySet="TBLTYPE">
+                <ScalarProperty Name="TYPEID" ColumnName="TYPEID" />
+                <ScalarProperty Name="TYPENAME" ColumnName="TYPENAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLADMIN">
+            <EntityTypeMapping TypeName="DBBlogFilmModel.TBLADMIN">
+              <MappingFragment StoreEntitySet="TBLADMIN">
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
